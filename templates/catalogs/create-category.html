@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Category - Acme Fashion Store{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+            <h1 class="page-title">Create New Category</h1>
+            <form id="create-category-form" class="create-form" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="category_name">Category Name</label>
+                    <input type="text" id="category_name" name="category_name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Create Category</button>
+                </div>
+            </form>
+        </div>
+{% endblock %}

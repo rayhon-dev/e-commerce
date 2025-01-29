@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Product - Acme Fashion Store{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Create New Product</h1>
+        <div class="form-container">
+            <form class="product-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="product_name">Product Name</label>
+                    <input type="text" id="product_name" name="product_name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" name="price" class="form-control" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="sizes">Available sizes:</label>
+                    <input type="text" id="sizes" name="sizes" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="colors">Colors:</label>
+                    <input type="text" id="colors" name="colors" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" class="form-control" required>
+                        <option value="">Select a category</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.category_name}}</option>
+                        {% empty %}
+                            <option value="">No categories yet</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="product_image">Product Image</label>
+                    <input type="file" id="product_image" name="product_image" class="form-control" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn btn-primary hover-lift">Create Product</button>
+            </form>
+        </div>
+{% endblock %}

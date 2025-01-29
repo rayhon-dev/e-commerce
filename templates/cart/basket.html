@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Basket - Acme Fashion Store{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Your Basket</h1>
+    <div class="basket-container">
+        {% if cart|length > 0 %}
+            <table class="basket-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                        <tr class="hover-lift">
+                            {% if item.product %}
+                                <td>
+                                    <div class="product-info-cell">
+                                        <img src="{{ item.product.product_image.url }}"
+                                             alt="{{ item.product.name }}"
+                                             class="product-image">
+                                        <span>{{ item.product.product_name }}</span>
+                                    </div>
+                                </td>
+                                <td>${{ item.price }}</td>
+                                <td>
+                                    <form method="post" action="{% url 'cart:cart_add' item.product.id %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control form-control-sm d-inline" style="width: 60px;">
+                                        <input type="hidden" name="override" value="True">
+                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                    </form>
+                                </td>
+                                <td class="price">${{ item.total_price }}</td>
+                                <td>
+                                    <form method="post" action="{% url 'cart:cart_remove' item.product.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </form>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="order-summary">
+                <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span class="font-semibold">${{ cart.get_total_price }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span class="font-semibold">$5.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span>${{ total|floatformat:2 }}</span>
+                </div>
+                <a href="{% url 'checkout:order_create' %}" class="btn btn-primary hover-lift w-full mt-4">
+                    <i class="fas fa-shopping-cart mr-2"></i>
+                    Proceed to Checkout
+                </a>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h3>Your basket is empty!</h3><br>
+                <a href="{% url 'home' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

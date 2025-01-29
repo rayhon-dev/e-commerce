@@ -1,0 +1,11 @@
+<header class="header">
+    <div class="container">
+        <a href="{% url 'home' %}" class="logo">Acme Fashion</a>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'products:create' %}">Create Product</a>
+            <a href="{% url 'catalogs:create' %}">Create Category</a>
+            <a href="{% url 'cart:cart_detail' %}">Basket</a>
+        </nav>
+    </div>
+</header>

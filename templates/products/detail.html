@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Product Detail - Acme Fashion Store{% endblock %}
+
+{% block content %}
+    <div class="product-detail">
+        <div class="product-image">
+            <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}">
+        </div>
+        <div class="product-info">
+            <h1 class="product-title">{{ product.product_name }}</h1>
+            <p class="product-price">${{ product.price }}</p>
+            <p class="product-description">{{ product.description }}</p>
+            <div class="product-meta">
+                <p><strong>Available sizes:</strong> {{ product.sizes }}</p>
+                <p><strong>Colors:</strong> {{ product.colors }}</p>
+            </div>
+            <form method="post" action="{% url 'cart:cart_add' product.id %}">
+                {% csrf_token %}
+                <label for="id_quantity">Quantity:</label>
+                <input type="number" id="id_quantity" name="quantity" value="1" min="1" max="10" class="form-control">
+                <button type="submit" class="btn btn-primary">Add to Basket</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

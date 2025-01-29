@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout Success - Acme Fashion Store{% endblock %}
+
+{% block content %}
+    <div class="success-message">
+            <i class="fas fa-check-circle"></i>
+            <h1>Thank You for Your Purchase!</h1>
+            <p>Your order has been successfully placed.</p>
+            <p>Order number: <strong>{{ order.id }}</strong></p>
+            <p>We've sent a confirmation email to your inbox.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary">Continue Shopping</a>
+        </div>
+{% endblock %}
